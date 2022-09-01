@@ -1,0 +1,111 @@
+[
+  {
+    "id": "0",
+    "gender": "female",
+    "name": "Галя",
+    "surname": "Хуторна",
+    "spouses": [
+      {
+        "id": "1",
+        "type": "married"
+      }
+    ],
+    "siblings": [],
+    "parents": [],
+    "children": [
+      {
+        "id": "2",
+        "type": "blood"
+      },
+      {
+        "id": "3",
+        "type": "blood"
+      }
+    ]
+  },
+  {
+    "id": "1",
+    "surname": "Хуторний",
+    "gender": "male",
+    "name": "Федір",
+    "spouses": [
+      {
+        "id": "0",
+        "type": "married"
+      }
+    ],
+    "siblings": [],
+    "parents": [],
+    "children": [
+      {
+        "id": "2",
+        "type": "blood"
+      },
+      {
+        "id": "3",
+        "type": "blood"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "surname": "Хуторна",
+    "gender": "female",
+    "name": "Любов",
+    "spouses": [],
+    "siblings": [
+      {
+        "id": "3",
+        "type": "blood"
+      }
+    ],
+    "parents": [
+      {
+        "id": "1",
+        "type": "blood"
+      }
+    ],
+    "children": [
+      {
+        "id": "4",
+        "type": "blood"
+      }
+    ]
+  },
+
+  {
+    "id": "3",
+    "surname": "Хуторний",
+    "name": "Юра",
+    "gender": "male",
+    "spouses": [],
+    "siblings": [
+      {
+        "id": "2",
+        "type": "blood"
+      }
+    ],
+    "parents": [
+      {
+        "id": "1",
+        "type": "blood"
+      }
+    ],
+    "children": []
+  },
+  {
+    "id": "4",
+    "surname": "Хуторна",
+    "name": "Саша",
+    "gender": "female",
+    "spouses": [],
+    "siblings": [],
+    "parents": [
+      {
+        "id": "2",
+        "type": "blood"
+      }
+    ],
+    "children": []
+  }
+]

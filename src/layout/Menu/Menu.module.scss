@@ -1,0 +1,164 @@
+.menu {
+  .profile {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    grid-template-rows: repeat(3, auto);
+
+    align-items: center;
+
+    min-height: 70px;
+    gap: 0 10px;
+    grid-template-areas:
+      "avatar name "
+      "avatar born"
+      "avatar more";
+
+    .avatar {
+      grid-area: avatar;
+
+      color: var(--primary);
+    }
+
+    .name {
+      color: var(--black);
+
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 20px;
+      grid-area: name;
+    }
+
+    .born {
+      color: var(--grey);
+
+      font-size: 14px;
+      grid-area: born;
+    }
+
+    .more {
+      display: flex;
+
+      padding-top: 5px;
+
+      text-transform: uppercase;
+
+      color: var(--primary);
+
+      font-size: 13px;
+      line-height: 16px;
+      grid-area: more;
+    }
+  }
+
+  .menuItem {
+    color: var(--black);
+
+    border-bottom: 1px solid var(--primary);
+
+    .menuHeader {
+      padding: 10px 0;
+
+      cursor: pointer;
+      text-transform: uppercase;
+
+      color: var(--grey);
+    }
+
+    ul {
+      margin: 0 0 5px;
+      padding: 0;
+
+      list-style-type: none;
+
+      .factsList {
+        display: grid;
+
+        align-items: center;
+
+        margin-bottom: 5px;
+        grid-template-columns: auto 1fr;
+        grid-template-rows: repeat(2, auto);
+
+        gap: 0 10px;
+        grid-template-areas:
+          "year text "
+          "yearNow text";
+
+        .year {
+          align-self: end;
+
+          font-size: 20px;
+          font-weight: 600;
+          grid-area: year;
+        }
+
+        .yearNow {
+          align-self: start;
+
+          color: var(--grey);
+
+          font-size: 12px;
+          grid-area: yearNow;
+          justify-self: center;
+        }
+
+        .text {
+          color: var(--light-black);
+
+          font-size: 14px;
+          grid-area: text;
+        }
+      }
+
+      .relativesList {
+        display: grid;
+
+        align-items: center;
+
+        margin-bottom: 5px;
+        grid-template-columns: auto 1fr;
+        grid-template-rows: repeat(2, auto);
+
+        gap: 0 10px;
+        grid-template-areas:
+          "image name "
+          "image status";
+
+        .image {
+          grid-area: image;
+        }
+
+        .status {
+          color: var(--grey);
+
+          font-size: 12px;
+          grid-area: status;
+        }
+
+        .name {
+          text-transform: uppercase;
+
+          font-size: 14px;
+          font-weight: 600;
+          grid-area: name;
+        }
+      }
+    }
+  }
+}
+
+.bDay {
+  display: flex;
+  align-items: center;
+}
+
+.bDay .persone {
+  font-size: 17px;
+}
+
+.bDay .date {
+  margin-right: 10px;
+
+  font-size: 12px;
+  font-weight: 600;
+}

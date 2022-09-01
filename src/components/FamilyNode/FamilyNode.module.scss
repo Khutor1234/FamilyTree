@@ -1,0 +1,86 @@
+.root {
+  position: absolute;
+
+  padding: 10px;
+
+  .inner {
+    display: flex;
+    align-items: center;
+
+    padding: 10px;
+
+    border-radius: 10px;
+    background: var(--white);
+
+    .info {
+      padding-left: 5px;
+
+      color: var(--black);
+
+      font-size: 15px;
+
+      span {
+        padding-right: 5px;
+      }
+
+      div {
+        color: var(--grey);
+
+        font-size: 12px;
+      }
+    }
+  }
+
+  .male {
+    color: var(--blue);
+    border: 2px solid var(--blue);
+  }
+
+  .female {
+    color: var(--pink);
+    border: 2px solid var(--pink);
+  }
+
+  .isRoot {
+    border-color: rgb(0 0 0 / 40%);
+  }
+
+  .plus {
+    position: absolute;
+    right: 50%;
+    bottom: 15px;
+
+    width: 20px;
+    height: 20px;
+
+    cursor: pointer;
+    transform: translate(50%);
+
+    color: var(--black);
+    border-radius: 100%;
+    background: var(--white);
+  }
+
+  .sub {
+    position: absolute;
+    top: 6px;
+    right: 14px;
+
+    width: 14px;
+    height: 10px;
+
+    cursor: pointer;
+
+    border: 1px solid rgb(0 0 0 / 20%);
+    border-radius: 4px 0;
+    background: #FFF;
+
+    .male {
+      background: #FDAED8;
+    }
+
+    .female {
+      background: #A4ECFF;
+    }
+  }
+}

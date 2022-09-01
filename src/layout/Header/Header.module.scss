@@ -1,0 +1,43 @@
+.header {
+  display: none;
+
+  padding: 15px 10px;
+
+  color: var(--white);
+
+  background-color: var(--primary);
+
+  .mobileMenu {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    overflow-y: scroll;
+
+    padding: 40px 10px;
+
+    background-color: var(--bg);
+  }
+
+  .menuClose {
+    position: fixed;
+    z-index: 11;
+    top: 15px;
+    right: 15px;
+
+    color: var(--primary);
+  }
+
+  .menuOpen {
+    color: var(--primary);
+  }
+}
+
+@media (max-width: 765px) {
+  .header {
+    display: block;
+  }
+}
