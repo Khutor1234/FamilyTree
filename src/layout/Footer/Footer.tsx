@@ -10,10 +10,10 @@ const Footer = ({ className, ...props }: FooterProps): JSX.Element => {
   return (
     <footer className={cn(className, styles.footer)} {...props}>
       <div>MyFamily © 2022 - {format(new Date(), 'yyyy')}</div>
-      <a href="#" target="_blank">
+      <a href="https://www.instagram.com/" rel="noreferrer" target="_blank">
         <IoLogoInstagram size="30px" />
       </a>
-      <a href="#" target="_blank">
+      <a href="https://www.instagram.com/" rel="noreferrer" target="_blank">
         <RiTelegramLine size="30px" />
       </a>
       <span>Хуторна Олександра</span>
