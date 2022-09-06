@@ -26,7 +26,7 @@ export default React.memo<FamilyNodeProps>(function FamilyNode({
         )}
       >
         <CgProfile size="40px" />
-        <div className={styles.info} >
+        <div className={styles.info}>
           <span>{node?.name && node.name}</span>
           <span>{node?.surname && node.surname}</span>
           <div>1999j.</div>
