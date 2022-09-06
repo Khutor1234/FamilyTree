@@ -1,5 +1,6 @@
 import storage from 'redux-persist/lib/storage';
 import { configureStore } from '@reduxjs/toolkit';
+import logger from 'redux-logger';
 import { persistStore } from 'redux-persist';
 import {
   persistReducer,
@@ -22,7 +23,7 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
+    getDefaultMiddleware.concat(logger)({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
