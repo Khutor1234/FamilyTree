@@ -13,8 +13,6 @@ function* getUserSaga() {
     while (true) {
       const { user } = yield take(authChannel);
 
-      console.log(user, 'user');
-
       if (user) {
         yield put({
           type: USER.GET_USER_SUCCESS,

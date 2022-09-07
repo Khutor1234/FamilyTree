@@ -3,13 +3,17 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { useState } from 'react';
 import { BiMenuAltLeft } from 'react-icons/bi';
 import { RiCloseLine } from 'react-icons/ri';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
+import { TState, TDispatch } from '../../components/interfaces';
+import { logOut } from '../../store/actions/user';
 import { Menu } from '../index';
 import { Button } from '../../components';
 import { HeaderProps } from './props';
 import styles from './index.module.scss';
 
-const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
+const Header = ({ className, logOut, ...props }: HeaderProps): JSX.Element => {
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const shouldReduceMotion = useReducedMotion();
 
@@ -36,9 +40,7 @@ const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
         <Button
           className={styles.logout}
           text="Вийти"
-          onClick={() => {
-            console.log('hii');
-          }}
+          onClick={() => logOut()}
         />
       </div>
 
@@ -57,4 +59,14 @@ const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
   );
 };
 
-export default Header;
+const mapStateToProps = (state: TState) => ({});
+
+const mapDispatchToProps = (dispatch: TDispatch) =>
+  bindActionCreators(
+    {
+      logOut,
+    },
+    dispatch
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

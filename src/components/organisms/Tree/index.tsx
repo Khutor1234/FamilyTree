@@ -4,7 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { TState, TDispatch } from '../../interfaces';
+import { treeSelector } from '../../../store/selectors/tree';
 import { logOut } from '../../../store/actions/user';
+import { getTree } from '../../../store/actions/tree';
 import averageTree from 'relatives-tree/samples/average-tree.json';
 import couple from 'relatives-tree/samples/couple.json';
 import diffParents from 'relatives-tree/samples/diff-parents.json';
@@ -41,11 +43,20 @@ const SOURCES: { [key: string]: Source } = {
   test: test as Source,
 };
 
-const Tree = memo<TreeProps>(function Tree({ logOut, ...props }) {
+const Tree = memo<TreeProps>(function Tree({
+  logOut,
+  getTree,
+  tree,
+  ...props
+}) {
   const [source, setSource] = useState<string>(DEFAULT_SOURCE);
   const [nodes, setNodes] = useState<Source>([]);
   const [myId, setMyId] = useState<string>('');
   const [rootId, setRootId] = useState<string>('');
+
+  useEffect(() => {
+    getTree();
+  }, []);
 
   useEffect(() => {
     const loadData = async () => {
@@ -69,6 +80,7 @@ const Tree = memo<TreeProps>(function Tree({ logOut, ...props }) {
 
   const sources = {
     ...SOURCES,
+    tree: tree as Source,
   };
 
   return (
@@ -99,7 +111,11 @@ const Tree = memo<TreeProps>(function Tree({ logOut, ...props }) {
           <option value="Cambridge" />
         </datalist>
 
-        <Button className={styles.logout} text="Вийти" />
+        <Button
+          className={styles.logout}
+          text="Вийти"
+          onClick={() => logOut()}
+        />
       </header>
       {nodes.length > 0 && (
         <ZoomPan
@@ -136,12 +152,15 @@ const Tree = memo<TreeProps>(function Tree({ logOut, ...props }) {
   );
 });
 
-const mapStateToProps = (state: TState) => ({});
+const mapStateToProps = (state: TState) => ({
+  tree: treeSelector(state),
+});
 
 const mapDispatchToProps = (dispatch: TDispatch) =>
   bindActionCreators(
     {
       logOut,
+      getTree,
     },
     dispatch
   );

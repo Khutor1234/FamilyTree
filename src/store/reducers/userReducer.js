@@ -29,10 +29,9 @@ export default injectReducer(initialState.userReducer, {
     isRequest: true,
     errors: null,
   }),
-  [USER.LOG_IN_SUCCESS]: (state, { payload: { response } }) => ({
+  [USER.LOG_IN_SUCCESS]: (state) => ({
     ...state,
     isRequest: false,
-    user: response,
     errors: null,
   }),
   [USER.LOG_IN_FAILURE]: (state, { payload: { errors } }) => ({
