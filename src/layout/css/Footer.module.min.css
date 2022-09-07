@@ -1,2 +1,0 @@
-.footer{display:-ms-grid;display:grid;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding:10px 30px;color:var(--white);background:var(--primary);font-size:14px;line-height:10px;-ms-grid-columns:1fr auto auto 150px;grid-template-columns:1fr auto auto 150px;gap:0 5px}@media (max-width: 450px){.footer{-ms-grid-columns:1fr auto auto 1fr;grid-template-columns:1fr auto auto 1fr;line-height:17px}}
-/*# sourceMappingURL=Footer.module.min.css.map */

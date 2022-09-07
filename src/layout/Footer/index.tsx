@@ -3,8 +3,8 @@ import { format } from 'date-fns';
 import { IoLogoInstagram } from 'react-icons/io';
 import { RiTelegramLine } from 'react-icons/ri';
 
-import { FooterProps } from './Footer.props';
-import styles from './Footer.module.scss';
+import { FooterProps } from './props';
+import styles from './index.module.scss';
 
 const Footer = ({ className, ...props }: FooterProps): JSX.Element => {
   return (

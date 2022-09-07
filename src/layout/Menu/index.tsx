@@ -5,8 +5,8 @@ import { CgProfile } from 'react-icons/cg';
 import { motion } from 'framer-motion';
 
 import { countYears } from '../../utils';
-import { MenuProps } from './Menu.props';
-import styles from './Menu.module.scss';
+import { MenuProps } from './props';
+import styles from './index.module.scss';
 
 const data = {
   name: 'Хуторна Олександра',

@@ -1,14 +1,13 @@
 import cn from 'classnames';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useState } from 'react';
-import { GrMenu, GrClose } from 'react-icons/gr';
 import { BiMenuAltLeft } from 'react-icons/bi';
 import { RiCloseLine } from 'react-icons/ri';
 
 import { Menu } from '../index';
 import { Button } from '../../components';
-import { HeaderProps } from './Header.props';
-import styles from './Header.module.scss';
+import { HeaderProps } from './props';
+import styles from './index.module.scss';
 
 const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
   const [isOpened, setIsOpened] = useState<boolean>(false);

@@ -1,8 +1,8 @@
 import cn from 'classnames';
 
 import { Menu } from '../index';
-import { SidebarProps } from './Sidebar.props';
-import styles from './Sidebar.module.css';
+import { SidebarProps } from './props';
+import styles from './index.module.scss';
 
 const Sidebar = ({ className, ...props }: SidebarProps): JSX.Element => {
   return (
