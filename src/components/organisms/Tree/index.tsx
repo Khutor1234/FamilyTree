@@ -56,7 +56,7 @@ const Tree = memo<TreeProps>(function Tree({
 
   useEffect(() => {
     getTree();
-  }, []);
+  });
 
   useEffect(() => {
     const loadData = async () => {
