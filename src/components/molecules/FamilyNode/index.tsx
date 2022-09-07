@@ -1,12 +1,12 @@
-import React from 'react';
+import { memo } from 'react';
 import classNames from 'classnames';
 import { CgProfile } from 'react-icons/cg';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 
-import { FamilyNodeProps } from './FamilyNode.props';
-import styles from './FamilyNode.module.scss';
+import { FamilyNodeProps } from './props';
+import styles from './index.module.scss';
 
-export default React.memo<FamilyNodeProps>(function FamilyNode({
+export default memo<FamilyNodeProps>(function FamilyNode({
   className,
   node,
   isRoot,
@@ -14,8 +14,6 @@ export default React.memo<FamilyNodeProps>(function FamilyNode({
   style,
   ...props
 }) {
-  console.log(node.name);
-
   return (
     <div className={styles.root} style={style} title={node.id} {...props}>
       <div

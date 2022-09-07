@@ -4,11 +4,13 @@ import injectReducer from '../injectReducer';
 import { USER } from '../types';
 
 export default injectReducer(initialState.userReducer, {
-  [USER.GET_USER]: (state) => ({
-    ...state,
-    isRequest: true,
-    errors: null,
-  }),
+  [USER.GET_USER]: (state) => {
+    return {
+      ...state,
+      isRequest: true,
+      errors: null,
+    };
+  },
   [USER.GET_USER_SUCCESS]: (state, { payload: { response } }) => ({
     ...state,
     isRequest: false,

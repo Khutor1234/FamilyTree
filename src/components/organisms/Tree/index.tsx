@@ -1,6 +1,10 @@
 import { ChangeEvent, memo, useState, useEffect, useCallback } from 'react';
 import ReactFamilyTree from 'react-family-tree';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
+import { TState, TDispatch } from '../../interfaces';
+import { logOut } from '../../../store/actions/user';
 import averageTree from 'relatives-tree/samples/average-tree.json';
 import couple from 'relatives-tree/samples/couple.json';
 import diffParents from 'relatives-tree/samples/diff-parents.json';
@@ -10,12 +14,12 @@ import severalSpouses from 'relatives-tree/samples/several-spouses.json';
 import simpleFamily from 'relatives-tree/samples/simple-family.json';
 import testTreeN1 from 'relatives-tree/samples/test-tree-n1.json';
 import testTreeN2 from 'relatives-tree/samples/test-tree-n2.json';
-import test from '../../test.json';
+import test from '../../../test.json';
 
-import { ZoomPan, FamilyNode } from '../index';
-import { ExtNodeAdditionally, NodeAdditionally } from '../interfaces';
-import { TreeProps } from './Tree.props';
-import styles from './Tree.module.scss';
+import { ZoomPan, FamilyNode, Button } from '../../index';
+import { ExtNodeAdditionally, NodeAdditionally } from '../../interfaces';
+import { TreeProps } from './props';
+import styles from './index.module.scss';
 
 const WIDTH = 200;
 const HEIGHT = 100;
@@ -37,7 +41,7 @@ const SOURCES: { [key: string]: Source } = {
   test: test as Source,
 };
 
-export default memo<TreeProps>(function Tree({ ...props }) {
+const Tree = memo<TreeProps>(function Tree({ logOut, ...props }) {
   const [source, setSource] = useState<string>(DEFAULT_SOURCE);
   const [nodes, setNodes] = useState<Source>([]);
   const [myId, setMyId] = useState<string>('');
@@ -94,6 +98,8 @@ export default memo<TreeProps>(function Tree({ ...props }) {
           <option value="Boston hhhhdhdh" />
           <option value="Cambridge" />
         </datalist>
+
+        <Button className={styles.logout} text="Вийти" />
       </header>
       {nodes.length > 0 && (
         <ZoomPan
@@ -129,3 +135,15 @@ export default memo<TreeProps>(function Tree({ ...props }) {
     </div>
   );
 });
+
+const mapStateToProps = (state: TState) => ({});
+
+const mapDispatchToProps = (dispatch: TDispatch) =>
+  bindActionCreators(
+    {
+      logOut,
+    },
+    dispatch
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(Tree);

@@ -90,3 +90,9 @@
     min-height: 120px;
   }
 }
+
+@media (max-width: 765px) {
+  .logout {
+    display: none;
+  }
+}

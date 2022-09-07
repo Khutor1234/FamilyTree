@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100vw;
+  height: 100vh;
+
+  background-image: url(../../../images/tree.jpg);
+  background-repeat: no-repeat;
+  background-position: 20% 20%;
+  background-size: cover;
+
+  .button {
+    width: 250px;
+    height: 100px;
+
+    cursor: pointer;
+    text-transform: uppercase;
+
+    color: var(--white);
+    border-color: var(--primary-dark);
+    border-radius: 10px;
+    background-color: var(--primary);
+
+    font-size: 15px;
+    font-weight: 600;
+  }
+}

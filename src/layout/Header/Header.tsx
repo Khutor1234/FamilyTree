@@ -2,8 +2,11 @@ import cn from 'classnames';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useState } from 'react';
 import { GrMenu, GrClose } from 'react-icons/gr';
+import { BiMenuAltLeft } from 'react-icons/bi';
+import { RiCloseLine } from 'react-icons/ri';
 
 import { Menu } from '../index';
+import { Button } from '../../components';
 import { HeaderProps } from './Header.props';
 import styles from './Header.module.scss';
 
@@ -27,8 +30,17 @@ const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
 
   return (
     <header className={cn(className, styles.header)} {...props}>
-      <div className={styles.menuOpen} onClick={() => setIsOpened(true)}>
-        <GrMenu />
+      <div className={styles.menuOpen}>
+        <div className={styles.icon} onClick={() => setIsOpened(true)}>
+          <BiMenuAltLeft size="30" />
+        </div>
+        <Button
+          className={styles.logout}
+          text="Вийти"
+          onClick={() => {
+            console.log('hii');
+          }}
+        />
       </div>
 
       <motion.div
@@ -39,7 +51,7 @@ const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
       >
         <Menu />
         <div className={styles.menuClose} onClick={() => setIsOpened(false)}>
-          <GrClose />
+          <RiCloseLine size="30" />
         </div>
       </motion.div>
     </header>

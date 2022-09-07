@@ -2,8 +2,8 @@ import { useEffect, useRef, memo } from 'react';
 import classNames from 'classnames';
 import { create } from 'pinch-zoom-pan';
 
-import { ZoomPanProps } from './ZoomPan.props';
-import styles from './ZoomPan.module.scss';
+import { ZoomPanProps } from './props';
+import styles from './index.module.scss';
 
 export default memo<ZoomPanProps>(function ZoomPan({
   min,

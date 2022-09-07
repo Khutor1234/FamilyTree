@@ -3,13 +3,13 @@ import { Routes, Route } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { AppProps } from './App.props';
-import { MainPage } from '../../pages';
+import { AppProps } from './props';
+import { MainPage, LoginPage } from '../../pages';
 import { TState, TDispatch } from '../interfaces';
 import { userSelector } from '../../store/selectors/user';
-import { getUser } from '../../store/actions/user';
+import { getUser, logIn } from '../../store/actions/user';
 
-const App = ({ getUser, user }: AppProps) => {
+const App = ({ getUser, user, logIn }: AppProps) => {
   useEffect(() => {
     if (getUser) {
       getUser();
@@ -17,7 +17,7 @@ const App = ({ getUser, user }: AppProps) => {
   });
 
   const routes = !user ? (
-    <Route path="/" element={<MainPage />} />
+    <Route path="/" element={<LoginPage logIn={logIn} />} />
   ) : (
     <>
       <Route path="/" element={<MainPage />} />
@@ -35,6 +35,7 @@ const mapDispatchToProps = (dispatch: TDispatch) =>
   bindActionCreators(
     {
       getUser,
+      logIn,
     },
     dispatch
   );

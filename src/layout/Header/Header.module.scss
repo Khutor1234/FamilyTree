@@ -1,8 +1,6 @@
 .header {
   display: none;
 
-  padding: 15px 10px;
-
   color: var(--white);
 
   background-color: var(--primary);
@@ -25,14 +23,35 @@
   .menuClose {
     position: fixed;
     z-index: 11;
-    top: 15px;
-    right: 15px;
+    top: 5px;
+    right: 5px;
 
-    color: var(--primary);
+    padding: 10px;
+
+    cursor: pointer;
+
+    color: var(--black);
   }
 
   .menuOpen {
-    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    cursor: pointer;
+
+    color: var(--white);
+
+    .logout {
+      margin-right: 10px;
+
+      color: var(--primary);
+      background-color: var(--white);
+    }
+
+    .icon {
+      padding: 10px;
+    }
   }
 }
 

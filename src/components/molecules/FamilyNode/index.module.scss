@@ -73,14 +73,14 @@
 
     border: 1px solid rgb(0 0 0 / 20%);
     border-radius: 4px 0;
-    background: #FFF;
+    background: var(--white);
 
     .male {
-      background: #FDAED8;
+      background: var(--pink);
     }
 
     .female {
-      background: #A4ECFF;
+      background: var(--blue);
     }
   }
 }

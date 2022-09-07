@@ -1,13 +1,14 @@
 import { all, takeLatest, take, call, put } from 'redux-saga/effects';
 
-import { authProvider as ap, reduxSagaFirebase as rsf } from '../../service';
+import {
+  authProvider as ap,
+  reduxSagaFirebase as rsf,
+} from '../../utils/service';
 import { USER } from '../types';
 
 function* getUserSaga() {
   try {
     const authChannel = yield call(rsf.auth.channel);
-
-    console.log(authChannel, 'authChannel');
 
     while (true) {
       const { user } = yield take(authChannel);

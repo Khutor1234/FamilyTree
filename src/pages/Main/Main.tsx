@@ -1,4 +1,4 @@
-import Tree from '../../components/Tree/Tree';
+import Tree from '../../components/organisms/Tree';
 import { Layout } from '../../layout';
 
 const MainPage = (): JSX.Element => {
