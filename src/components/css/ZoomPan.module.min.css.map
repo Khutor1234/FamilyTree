@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,KAAK,AAAC,CACJ,QAAQ,CAAE,QAAQ,CAElB,QAAQ,CAAE,MAAM,CAEhB,SAAS,CAAE,aAAa,CACzB,AAED,AAAA,MAAM,AAAC,CACL,QAAQ,CAAE,QAAQ,CAElB,KAAK,CAAE,CAAC,CACR,MAAM,CAAE,CAAC,CAET,SAAS,CAAE,eAAe,CAAC,QAAQ,CACnC,gBAAgB,CAAE,MAAM,CACxB,WAAW,CAAE,SAAS,CACvB,AAED,AAAA,OAAO,AAAC,CACN,QAAQ,CAAE,QAAQ,CAElB,SAAS,CAAE,qBAAqB,CACjC",
-    "sources": [
-        "../ZoomPan/ZoomPan.module.scss"
-    ],
-    "names": [],
-    "file": "ZoomPan.module.min.css"
-}
