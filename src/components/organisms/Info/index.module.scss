@@ -1,0 +1,317 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: repeat(4, auto);
+
+  gap: 10px;
+  grid-template-areas:
+    'header header '
+    'main relalives '
+    'social facts'
+    'photo photo';
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    grid-area: header;
+
+    .logout {
+      margin-left: 20px;
+    }
+
+    .back {
+      display: flex;
+      align-items: center;
+
+      cursor: pointer;
+      text-transform: uppercase;
+
+      color: var(--primary);
+
+      font-size: 12px;
+      font-weight: 600;
+    }
+  }
+
+  .main,
+  .facts,
+  .social,
+  .relalives,
+  .photo {
+    padding: 10px;
+
+    border: 1px solid var(--primary);
+    border-radius: 20px;
+    background: var(--white);
+  }
+
+  .titleWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .title {
+    text-transform: uppercase;
+
+    color: var(--grey);
+
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .noneData {
+    margin-top: 10px;
+
+    text-align: center;
+
+    font-size: 12px;
+  }
+
+  .social {
+    grid-area: social;
+    .unknown {
+      margin-left: 10px;
+      margin-top: 2px;
+
+      text-transform: uppercase;
+
+      color: var(--grey);
+
+      font-size: 10px;
+      font-weight: 600;
+    }
+    .socialItem {
+      display: flex;
+      margin-top: 5px;
+    }
+    .socialText {
+      text-transform: uppercase;
+      color: var(--primary);
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .socialValue {
+      margin-left: 10px;
+      font-size: 14px;
+    }
+  }
+
+  .relalives {
+    grid-area: relalives;
+
+    .mr {
+      margin-bottom: 12px;
+    }
+
+    .relativesItem {
+      .relativesTitle {
+        margin-top: 5px;
+
+        text-transform: uppercase;
+
+        color: var(--primary);
+
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+
+        margin: 0;
+        padding-left: 20px;
+        text-decoration-style: none;
+
+        li {
+          margin-right: 30px;
+
+          &::marker {
+            color: var(--primary);
+
+            font-size: 20px;
+          }
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .unknown {
+        margin-left: -20px;
+
+        text-transform: uppercase;
+
+        color: var(--grey);
+
+        font-size: 10px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .main {
+    grid-area: main;
+
+    display: grid;
+    grid-template-columns: 150px auto;
+    grid-template-rows: auto;
+
+    gap: 10px;
+    grid-template-areas: 'profile info';
+
+    .profile {
+      grid-area: profile;
+
+      align-self: center;
+    }
+
+    .avatar {
+      width: 150px;
+      height: 150px;
+      margin: 0 auto;
+
+      color: var(--primary);
+    }
+
+    .name {
+      text-align: center;
+      text-transform: uppercase;
+
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .info {
+      grid-area: info;
+
+      .unknown {
+        text-align: center;
+
+        color: var(--black);
+
+        font-size: 10px;
+        font-weight: 600;
+      }
+
+      .headerItem {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 3px;
+
+        text-align: center;
+        text-transform: uppercase;
+
+        color: var(--white);
+        border-radius: 7px;
+        background: var(--primary);
+
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .title {
+        text-align: center;
+        text-transform: lowercase;
+
+        color: var(--grey);
+
+        font-size: 10px;
+        font-weight: 600;
+      }
+
+      .line {
+        width: 100%;
+        height: 1px;
+
+        background-color: var(--grey);
+      }
+
+      .text {
+        text-align: center;
+
+        font-size: 14px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .facts {
+    grid-area: facts;
+
+    .factItem {
+      display: flex;
+      align-items: center;
+
+      margin-top: 10px;
+      padding-bottom: 10px;
+
+      border-bottom: 1px solid var(--primary);
+
+      .text {
+        margin-left: 10px;
+      }
+
+      .yearsWrapper {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        .year {
+          color: var(--primary);
+
+          font-size: 14px;
+          font-weight: 600;
+        }
+
+        .now {
+          color: var(--grey);
+
+          font-size: 10px;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  .photo {
+    grid-area: photo;
+  }
+}
+
+@media (max-width: 765px) {
+  .wrapper {
+    grid-template-columns: minmax(320px, 1fr);
+    grid-template-rows: repeat(6, auto);
+    grid-template-areas:
+      'header'
+      'main'
+      'relalives'
+      'social'
+      'facts'
+      'photo';
+    gap: 10px;
+
+    .header {
+      .logout {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .wrapper {
+    .main {
+      grid-template-columns: auto;
+      grid-template-rows: repeat(3 auto);
+
+      grid-template-areas:
+        'profile'
+        'info';
+    }
+  }
+}

@@ -1,0 +1,70 @@
+.facts {
+  .plus {
+    margin-top: -8px;
+
+    cursor: pointer;
+
+    color: var(--primary);
+  }
+
+  .factsList {
+    display: flex;
+    flex-wrap: wrap;
+
+    .label {
+      margin-right: 10px;
+      margin-bottom: 5px;
+
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .fact {
+      display: flex;
+
+      margin-right: 5px;
+
+      font-size: 15px;
+
+      .delete {
+        cursor: pointer;
+
+        color: var(--primary);
+      }
+    }
+  }
+
+  .form {
+    display: flex;
+    align-items: center;
+
+    .input {
+      width: 150px;
+      margin-right: 10px;
+      margin-bottom: 5px;
+
+      padding: 5px;
+
+      border: 1px solid var(--primary);
+      border-radius: 10px;
+    }
+
+    .warning {
+      border: 1px solid red;
+    }
+
+    .year {
+      width: 90px;
+    }
+  }
+}
+
+@media (max-width: 430px) {
+  .facts {
+    .form {
+      input {
+        width: 120px;
+      }
+    }
+  }
+}

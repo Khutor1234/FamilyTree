@@ -1,8 +1,7 @@
 import { DetailedHTMLProps, HTMLAttributes } from 'react';
-import { IUser } from '../../components/interfaces';
 
-export interface MenuProps
+export interface ModalProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  user?: IUser;
-  tree: IUser[];
+  onChange: (e?: any) => void;
+  changetDate?: Date | null;
 }

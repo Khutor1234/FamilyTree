@@ -1,85 +1,21 @@
+import { useState, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import cn from 'classnames';
 import { AiOutlineCaretRight, AiFillCaretDown } from 'react-icons/ai';
-import { useState } from 'react';
 import { CgProfile } from 'react-icons/cg';
 import { motion } from 'framer-motion';
+import { connect } from 'react-redux';
+import { format } from 'date-fns';
 
+import { TState } from '../../components/interfaces';
+import { mainMenu as menu } from '../../components/data';
+import { treeSelector } from '../../store/selectors/tree';
+import { userSelector } from '../../store/selectors/user';
 import { countYears } from '../../utils';
 import { MenuProps } from './props';
 import styles from './index.module.scss';
 
-const data = {
-  name: 'Хуторна Олександра',
-  born: 1999,
-  country: 'Україна',
-  facts: [
-    {
-      id: 1,
-      year: 1999,
-      text: 'Народжена',
-    },
-    {
-      id: 2,
-      year: 2005,
-      text: 'Пішла в садочок',
-    },
-    {
-      id: 3,
-      year: 2016,
-      text: 'Закінчила школу',
-    },
-  ],
-  relatives: [
-    {
-      id: 1,
-      status: 'Мама',
-      name: 'Хуторна Любов',
-      born: 1974,
-    },
-    {
-      id: 2,
-      status: 'Тато',
-      name: 'Хуторна Любов',
-      born: 1974,
-    },
-  ],
-};
-
-const bDay = [
-  {
-    id: 1,
-    date: '31.03.09',
-    person: 'Хуторна Олександра',
-  },
-  {
-    id: 2,
-    date: '31.04.99',
-    person: 'Хуторна Олександра',
-  },
-];
-
-const menu = [
-  {
-    id: 1,
-    variant: 1,
-    name: 'Факти',
-    type: 'facts',
-  },
-  {
-    id: 2,
-    variant: 2,
-    name: 'Близькі родичі',
-    type: 'relatives',
-  },
-  {
-    id: 3,
-    variant: 3,
-    name: 'Дні народження',
-    type: 'bDay',
-  },
-];
-
-const Menu = ({ className, ...props }: MenuProps): JSX.Element => {
+const Menu = ({ className, user, tree }: MenuProps): JSX.Element => {
   const [open, setOpen] = useState<string[]>([]);
 
   const variants = {
@@ -98,58 +34,183 @@ const Menu = ({ className, ...props }: MenuProps): JSX.Element => {
     }
   };
 
-  const renderMenuInside = (variant: number) => {
-    switch (variant) {
+  const renderMenuInside = (id: number) => {
+    switch (id) {
       case 1:
-        return data.relatives.map((el) => (
-          <li key={el.id} className={styles.relativesList}>
-            <div className={styles.image}>
-              <CgProfile size="30px" />
-            </div>
-            <div className={styles.name}>{el.name}</div>
-            <div className={styles.status}>
-              {el.status}, {countYears(el.born)}р.
-            </div>
-          </li>
-        ));
-
-      case 2:
-        return data.facts.map((el) => (
-          <li className={styles.factsList} key={el.id}>
+        return user?.facts?.map((el) => (
+          <li key={el.id + '' + Math.random()} className={styles.factsList}>
             <div className={styles.year}>{el.year}</div>
             <div className={styles.yearNow}>
-              ({countYears(el.year, data.born)}p.)
+              ({countYears(el.year, format(new Date(user?.born?.date), 'yyyy'))}
+              р.)
             </div>
             <div className={styles.text}>{el.text}</div>
           </li>
         ));
+      case 2:
+        return (
+          <Fragment>
+            {user?.spouses.map((el) => {
+              const thisUser = tree.find((elem) => elem.id === el.id);
+              return (
+                <li
+                  key={thisUser?.id + '' + Math.random()}
+                  className={styles.relativesList}
+                >
+                  <div className={styles.image}>
+                    <CgProfile size="30px" />
+                  </div>
+                  <div className={styles.name}>
+                    {thisUser?.name} {thisUser?.surname} {thisUser?.maidenName}
+                  </div>
+                  <div className={styles.status}>
+                    {thisUser?.gender === 'male' ? 'Чоловік' : 'Дружина'}
+                    {thisUser?.born.date &&
+                      thisUser.live &&
+                      ', ' +
+                        countYears(
+                          format(new Date(thisUser?.born.date), 'yyyy')
+                        ) +
+                        'p.'}
+                  </div>
+                </li>
+              );
+            })}
+            {user?.children.map((el) => {
+              const thisUser = tree.find((elem) => elem.id === el.id);
+              return (
+                <li
+                  key={thisUser?.id + '' + Math.random()}
+                  className={styles.relativesList}
+                >
+                  <div className={styles.image}>
+                    <CgProfile size="30px" />
+                  </div>
+                  <div className={styles.name}>
+                    {thisUser?.name} {thisUser?.surname} {thisUser?.maidenName}
+                  </div>
+                  <div className={styles.status}>
+                    {thisUser?.gender === 'male' ? 'Син' : 'Донька'}
+                    {thisUser?.born.date &&
+                      thisUser.live &&
+                      ', ' +
+                        countYears(
+                          format(new Date(thisUser?.born.date), 'yyyy')
+                        ) +
+                        'p.'}
+                  </div>
+                </li>
+              );
+            })}
+            {user?.parents.map((el) => {
+              const thisUser = tree.find((elem) => elem.id === el.id);
+              return (
+                <li
+                  key={thisUser?.id + '' + Math.random()}
+                  className={styles.relativesList}
+                >
+                  <div className={styles.image}>
+                    <CgProfile size="30px" />
+                  </div>
+                  <div className={styles.name}>
+                    {thisUser?.name} {thisUser?.surname} {thisUser?.maidenName}
+                  </div>
+                  <div className={styles.status}>
+                    {thisUser?.gender === 'male' ? 'Батько' : 'Мати'}
+                    {thisUser?.born.date &&
+                      thisUser.live &&
+                      ', ' +
+                        countYears(
+                          format(new Date(thisUser?.born.date), 'yyyy')
+                        ) +
+                        'p.'}
+                  </div>
+                </li>
+              );
+            })}
+            {user?.siblings.map((el) => {
+              const thisUser = tree.find((elem) => elem.id === el.id);
+
+              return (
+                <li
+                  key={thisUser?.id + '' + Math.random()}
+                  className={styles.relativesList}
+                >
+                  <div className={styles.image}>
+                    <CgProfile size="30px" />
+                  </div>
+                  <div className={styles.name}>
+                    {thisUser?.name} {thisUser?.surname} {thisUser?.maidenName}
+                  </div>
+                  <div className={styles.status}>
+                    {thisUser?.gender === 'male' ? 'Брат' : 'Сестра'}
+                    {thisUser?.born.date &&
+                      thisUser.live &&
+                      ', ' +
+                        countYears(
+                          format(new Date(thisUser?.born.date), 'yyyy')
+                        ) +
+                        'p.'}
+                  </div>
+                </li>
+              );
+            })}
+          </Fragment>
+        );
 
       case 3:
-        return bDay.map((el) => (
-          <li className={styles.bDay} key={el.id}>
-            <div className={styles.date}>{el.date}</div>
-            <div className={styles.persone}>{el.person}</div>
-          </li>
-        ));
+        return tree
+          .filter(
+            (elem) =>
+              elem?.born?.date &&
+              format(new Date(), 'MM') ===
+                format(new Date(elem?.born?.date), 'MM')
+          )
+          ?.sort(
+            (a, b) =>
+              a?.born?.date &&
+              b?.born?.date &&
+              +format(new Date(a?.born?.date), 'dd') -
+                +format(new Date(b?.born?.date), 'dd')
+          )
+          ?.map((el) => (
+            <li className={styles.bDay} key={el.id}>
+              <div className={styles.date}>
+                {format(new Date(el?.born?.date), 'dd.MM.yyyy')}
+              </div>
+              <div className={styles.persone}>
+                {el.name} {el.surname} {el.maidenName}
+              </div>
+            </li>
+          ));
       default:
         return null;
     }
   };
 
   return (
-    <div className={cn(className, styles.menu)} {...props}>
+    <div className={cn(className, styles.menu)}>
       <div className={styles.profile}>
         <div className={styles.avatar}>
           <CgProfile size="60px" />
         </div>
-        <div className={styles.name}>{data.name}</div>
+        <div className={styles.name}>
+          {user?.name} {user?.surname}
+          {user?.maidenName && '(' + user?.maidenName + ')'}
+        </div>
         <div className={styles.born}>
-          {countYears(data.born)}роки({data.born}р.), {data.country}
+          {user?.born?.country}({user?.born?.city}),
+          {user?.born.date &&
+            countYears(format(new Date(user?.born.date), 'yyyy'))}
+          р.
         </div>
-        <div className={styles.more}>
-          Дізнатись більше
-          <AiOutlineCaretRight size="14px" />
-        </div>
+
+        <Link to={`/${user?.id}`}>
+          <div className={styles.more}>
+            Дізнатись більше
+            <AiOutlineCaretRight size="14px" />
+          </div>
+        </Link>
       </div>
 
       {menu.map((el) => (
@@ -166,7 +227,7 @@ const Menu = ({ className, ...props }: MenuProps): JSX.Element => {
             initial={open.find((e) => e === el.type) ? 'visible' : 'hidden'}
             animate={open.find((e) => e === el.type) ? 'visible' : 'hidden'}
           >
-            {renderMenuInside(el.variant)}
+            {renderMenuInside(el.id)}
           </motion.ul>
         </div>
       ))}
@@ -174,4 +235,9 @@ const Menu = ({ className, ...props }: MenuProps): JSX.Element => {
   );
 };
 
-export default Menu;
+const mapStateToProps = (state: TState) => ({
+  user: userSelector(state),
+  tree: treeSelector(state),
+});
+
+export default connect(mapStateToProps)(Menu);

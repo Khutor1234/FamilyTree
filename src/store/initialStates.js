@@ -1,6 +1,8 @@
 const initialState = {
   userReducer: {},
-  treeReducer: {},
+  treeReducer: {
+    tree: [],
+  },
 };
 
 export default initialState;

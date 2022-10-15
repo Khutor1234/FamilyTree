@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { AppProps } from './props';
-import { MainPage, LoginPage } from '../../pages';
+import { MainPage, LoginPage, ProfilePage } from '../../pages';
 import { TState, TDispatch } from '../interfaces';
 import { userSelector } from '../../store/selectors/user';
 import { getUser, logIn } from '../../store/actions/user';
@@ -21,6 +21,7 @@ const App = ({ getUser, user, logIn }: AppProps) => {
   ) : (
     <>
       <Route path="/" element={<MainPage />} />
+      <Route path="/:id" element={<ProfilePage />} />
     </>
   );
 

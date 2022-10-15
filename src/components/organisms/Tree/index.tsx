@@ -1,23 +1,14 @@
-import { ChangeEvent, memo, useState, useEffect, useCallback } from 'react';
+import { memo, useState, useEffect, useCallback } from 'react';
 import ReactFamilyTree from 'react-family-tree';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import ReactLoading from 'react-loading';
 
 import { TState, TDispatch } from '../../interfaces';
-import { treeSelector } from '../../../store/selectors/tree';
+import { treeSelector, isRequestSelector } from '../../../store/selectors/tree';
 import { logOut } from '../../../store/actions/user';
+import { userSelector } from '../../../store/selectors/user';
 import { getTree } from '../../../store/actions/tree';
-import averageTree from 'relatives-tree/samples/average-tree.json';
-import couple from 'relatives-tree/samples/couple.json';
-import diffParents from 'relatives-tree/samples/diff-parents.json';
-import divorcedParents from 'relatives-tree/samples/divorced-parents.json';
-import empty from 'relatives-tree/samples/empty.json';
-import severalSpouses from 'relatives-tree/samples/several-spouses.json';
-import simpleFamily from 'relatives-tree/samples/simple-family.json';
-import testTreeN1 from 'relatives-tree/samples/test-tree-n1.json';
-import testTreeN2 from 'relatives-tree/samples/test-tree-n2.json';
-import test from '../../../test.json';
-
 import { ZoomPan, FamilyNode, Button } from '../../index';
 import { ExtNodeAdditionally, NodeAdditionally } from '../../interfaces';
 import { TreeProps } from './props';
@@ -26,97 +17,107 @@ import styles from './index.module.scss';
 const WIDTH = 200;
 const HEIGHT = 100;
 
-const DEFAULT_SOURCE = 'test';
-
 type Source = Array<NodeAdditionally>;
-
-const SOURCES: { [key: string]: Source } = {
-  'average-tree.json': averageTree as Source,
-  'couple.json': couple as Source,
-  'diff-parents.json': diffParents as Source,
-  'divorced-parents.json': divorcedParents as Source,
-  'empty.json': empty as Source,
-  'several-spouses.json': severalSpouses as Source,
-  'simple-family.json': simpleFamily as Source,
-  'test-tree-n1.json': testTreeN1 as Source,
-  'test-tree-n2.json': testTreeN2 as Source,
-  test: test as Source,
-};
 
 const Tree = memo<TreeProps>(function Tree({
   logOut,
   getTree,
   tree,
+  isRequest,
+  user,
   ...props
 }) {
-  const [source, setSource] = useState<string>(DEFAULT_SOURCE);
   const [nodes, setNodes] = useState<Source>([]);
   const [myId, setMyId] = useState<string>('');
   const [rootId, setRootId] = useState<string>('');
+  const [input, setInput] = useState('');
+  const [warning, setWarning] = useState(false);
 
   useEffect(() => {
     getTree();
-  });
+  }, []);
 
   useEffect(() => {
-    const loadData = async () => {
-      let newNodes = SOURCES[source];
+    if (tree && user?.id) {
+      setNodes([]);
+      setRootId(user.id);
+      setMyId(user.id);
+      setNodes(tree);
+    }
+  }, [tree]);
 
-      if (newNodes) {
-        setNodes([]); // Avoid invalid references to unknown nodes
-        setRootId(newNodes[0].id);
-        setMyId(newNodes[0].id);
-        setNodes(newNodes);
-      }
-    };
+  useEffect(() => {
+    const arrNames = input?.split(' ');
+    const findUser = tree.find(
+      (el) =>
+        arrNames[0] &&
+        el.surname === arrNames[0] &&
+        arrNames[1] &&
+        el.name === arrNames[1] &&
+        arrNames[2] &&
+        el.fatherName === arrNames[2]
+    );
 
-    loadData();
-  }, [source]);
+    if (!!input && findUser) {
+      setRootId(findUser.id);
+    }
+  }, [input]);
 
-  const onResetClick = useCallback(() => setRootId(myId), [myId]);
-  const onSetSource = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSource(event.target.value);
-  };
+  const onResetClick = useCallback(() => {
+    setRootId(myId);
+    setInput('');
+  }, [myId]);
 
-  const sources = {
-    ...SOURCES,
-    tree: tree as Source,
-  };
+  if (isRequest) {
+    return (
+      <div className={styles.spinner}>
+        <ReactLoading type="spin" color="#8DE4AF" />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container} {...props}>
       <header className={styles.header}>
-        <select onChange={onSetSource} defaultValue={source}>
-          {Object.keys(sources).map((item) => (
-            <option key={item} value={item}>
-              {item}
-            </option>
-          ))}
-        </select>
+        <div>
+          <input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            type="text"
+            name="names"
+            list="names"
+            placeholder="Пошук по імені..."
+          />
 
-        {rootId !== myId && (
-          <div className={styles.reset} onClick={onResetClick}>
-            Reset
-          </div>
-        )}
+          <datalist id="names">
+            {tree &&
+              tree?.map((el) => (
+                <option
+                  key={el.id}
+                  value={el.surname + ' ' + el.name + ' ' + el.fatherName}
+                />
+              ))}
+          </datalist>
+          {warning && <div>Нічого не знайдено</div>}
+        </div>
 
-        <input
-          type="text"
-          name="names"
-          list="names"
-          placeholder="Пошук по імені..."
-        />
-        <datalist id="names">
-          <option value="Boston hhhhdhdh" />
-          <option value="Cambridge" />
-        </datalist>
+        <div className={styles.buttons}>
+          {rootId !== myId && (
+            <Button
+              className={styles.reset}
+              text="Скинути"
+              onClick={onResetClick}
+            />
+          )}
 
-        <Button
-          className={styles.logout}
-          text="Вийти"
-          onClick={() => logOut()}
-        />
+          <Button
+            className={styles.logout}
+            text="Вийти"
+            onClick={() => logOut()}
+          />
+        </div>
       </header>
+
       {nodes.length > 0 && (
         <ZoomPan
           min={0.5}
@@ -154,6 +155,8 @@ const Tree = memo<TreeProps>(function Tree({
 
 const mapStateToProps = (state: TState) => ({
   tree: treeSelector(state),
+  isRequest: isRequestSelector(state),
+  user: userSelector(state),
 });
 
 const mapDispatchToProps = (dispatch: TDispatch) =>

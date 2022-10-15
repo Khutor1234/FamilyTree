@@ -1,0 +1,235 @@
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr 1fr;
+
+  gap: 20px;
+  grid-template-areas:
+    'spouses main children '
+    '. parents .';
+
+  .main {
+    grid-area: main;
+  }
+
+  .spouses {
+    grid-area: spouses;
+  }
+
+  .parents {
+    grid-area: parents;
+  }
+
+  .children {
+    grid-area: children;
+  }
+
+  .spouses,
+  .main,
+  .parents,
+  .children {
+    padding: 5px;
+
+    cursor: pointer;
+    text-align: center;
+
+    border: 2px solid var(--black);
+    border-radius: 10px;
+    background-color: var(--white);
+
+    line-height: 40px;
+  }
+
+  .empty {
+    cursor: default;
+
+    color: var(--grey);
+    border: 1px solid red;
+  }
+
+  .main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    span {
+      padding-right: 10px;
+
+      color: var(--black);
+    }
+  }
+
+  .male {
+    color: var(--blue);
+    border: 2px solid var(--blue);
+  }
+
+  .female {
+    color: var(--pink);
+    border: 2px solid var(--pink);
+  }
+}
+
+.mainModal {
+  padding: 40px;
+
+  background-color: var(--white);
+
+  .back {
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 10px;
+
+    cursor: pointer;
+    text-transform: uppercase;
+
+    color: var(--primary);
+
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .form {
+    display: grid;
+    grid-template-columns: auto 120px;
+    grid-template-rows: repeat(4, auto);
+
+    grid-template-areas:
+      'info avatar'
+      'live live'
+      'social social'
+      'facts facts';
+
+    .input {
+      width: 140px;
+      margin-right: 10px;
+      margin-bottom: 5px;
+
+      padding: 5px;
+
+      border: 1px solid var(--primary);
+      border-radius: 10px;
+    }
+
+    .sizeM {
+      width: 156px;
+      margin-right: 0;
+      margin-left: 10px;
+    }
+
+    .sizeL {
+      width: 205px;
+      margin-right: 0;
+    }
+
+    .mr {
+      margin-right: 10px;
+    }
+
+    .warning {
+      border: 1px solid red;
+    }
+
+    .live {
+      grid-area: live;
+    }
+
+    .social {
+      grid-area: social;
+    }
+
+    .label {
+      margin-top: 5px;
+      margin-bottom: 5px;
+
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .info {
+      grid-area: info;
+    }
+
+    .avatar {
+      grid-area: avatar;
+      justify-self: end;
+
+      align-self: center;
+
+      color: var(--primary);
+    }
+
+    .facts {
+      grid-area: facts;
+    }
+
+    .button {
+      width: 100%;
+      height: 40px;
+      margin-top: 10px;
+
+      text-transform: uppercase;
+
+      font-size: 15px;
+      font-weight: 600;
+    }
+  }
+}
+
+@media (max-width: 644px) {
+  .buttons {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+
+    grid-template-areas: 'main' 'parents' 'spouses' 'children';
+  }
+
+  .mainModal {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 460px) {
+  .mainModal {
+    padding: 10px;
+
+    .form {
+      grid-template-columns: auto;
+      grid-template-rows: repeat(5, auto);
+
+      margin-top: 10px;
+
+      grid-template-areas:
+        'avatar  '
+        'info'
+        'live'
+        'social'
+        'facts';
+
+      .avatar {
+        justify-self: center;
+      }
+
+      .input {
+        width: 155px;
+      }
+
+      .sizeM {
+        width: 107px;
+      }
+
+      .mrS {
+        margin-right: 0;
+      }
+
+      .sizeL {
+        width: 155px;
+      }
+
+      .mr {
+        margin-right: 10px;
+      }
+    }
+  }
+}

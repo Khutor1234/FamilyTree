@@ -20,6 +20,24 @@ export default injectReducer(initialState.treeReducer, {
     ...state,
     isRequest: false,
     errors: errors,
-    tree: null,
+    tree: [],
+  }),
+
+  [TREE.ADD_USER]: (state) => ({
+    ...state,
+    isRequest: true,
+    errors: null,
+  }),
+  [TREE.ADD_USER_SUCCESS]: (state, { payload: { response } }) => {
+    return {
+      ...state,
+      isRequest: false,
+      errors: null,
+    };
+  },
+  [TREE.ADD_USER_FAILURE]: (state, { payload: { errors } }) => ({
+    ...state,
+    isRequest: false,
+    errors: errors,
   }),
 });
