@@ -44,7 +44,7 @@ const Tree = memo<TreeProps>(function Tree({
       setMyId(user.id);
       setNodes(tree);
     }
-  }, [tree]);
+  }, [tree, user.id]);
 
   useEffect(() => {
     const arrNames = input?.split(" ");
