@@ -1,18 +1,18 @@
-import { memo, useState, useEffect, useCallback } from 'react';
-import ReactFamilyTree from 'react-family-tree';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import ReactLoading from 'react-loading';
+import { memo, useState, useEffect, useCallback } from "react";
+import ReactFamilyTree from "react-family-tree";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import ReactLoading from "react-loading";
 
-import { TState, TDispatch } from '../../interfaces';
-import { treeSelector, isRequestSelector } from '../../../store/selectors/tree';
-import { logOut } from '../../../store/actions/user';
-import { userSelector } from '../../../store/selectors/user';
-import { getTree } from '../../../store/actions/tree';
-import { ZoomPan, FamilyNode, Button } from '../../index';
-import { ExtNodeAdditionally, NodeAdditionally } from '../../interfaces';
-import { TreeProps } from './props';
-import styles from './index.module.scss';
+import { TState, TDispatch } from "../../interfaces";
+import { treeSelector, isRequestSelector } from "../../../store/selectors/tree";
+import { logOut } from "../../../store/actions/user";
+import { userSelector } from "../../../store/selectors/user";
+import { getTree } from "../../../store/actions/tree";
+import { ZoomPan, FamilyNode, Button } from "../../index";
+import { ExtNodeAdditionally, NodeAdditionally } from "../../interfaces";
+import { TreeProps } from "./props";
+import styles from "./index.module.scss";
 
 const WIDTH = 200;
 const HEIGHT = 100;
@@ -28,14 +28,14 @@ const Tree = memo<TreeProps>(function Tree({
   ...props
 }) {
   const [nodes, setNodes] = useState<Source>([]);
-  const [myId, setMyId] = useState<string>('');
-  const [rootId, setRootId] = useState<string>('');
-  const [input, setInput] = useState('');
-  const [warning, setWarning] = useState(false);
+  const [myId, setMyId] = useState<string>("");
+  const [rootId, setRootId] = useState<string>("");
+  const [input, setInput] = useState("");
+  // const [warning, setWarning] = useState(false);
 
   useEffect(() => {
     getTree();
-  }, []);
+  }, [getTree]);
 
   useEffect(() => {
     if (tree && user?.id) {
@@ -47,7 +47,7 @@ const Tree = memo<TreeProps>(function Tree({
   }, [tree]);
 
   useEffect(() => {
-    const arrNames = input?.split(' ');
+    const arrNames = input?.split(" ");
     const findUser = tree.find(
       (el) =>
         arrNames[0] &&
@@ -65,7 +65,7 @@ const Tree = memo<TreeProps>(function Tree({
 
   const onResetClick = useCallback(() => {
     setRootId(myId);
-    setInput('');
+    setInput("");
   }, [myId]);
 
   if (isRequest) {
@@ -94,11 +94,11 @@ const Tree = memo<TreeProps>(function Tree({
               tree?.map((el) => (
                 <option
                   key={el.id}
-                  value={el.surname + ' ' + el.name + ' ' + el.fatherName}
+                  value={el.surname + " " + el.name + " " + el.fatherName}
                 />
               ))}
           </datalist>
-          {warning && <div>Нічого не знайдено</div>}
+          {/* {warning && <div>Нічого не знайдено</div>} */}
         </div>
 
         <div className={styles.buttons}>

@@ -14,7 +14,7 @@ const App = ({ getUser, user, logIn }: AppProps) => {
     if (getUser) {
       getUser();
     }
-  }, []);
+  }, [getUser]);
 
   const routes = !user ? (
     <Route path="/" element={<LoginPage logIn={logIn} />} />

@@ -1,8 +1,8 @@
-import cn from 'classnames';
-import { useState, useEffect } from 'react';
+import cn from "classnames";
+import { useState, useEffect } from "react";
 
-import { RadioProps } from './props';
-import styles from './index.module.scss';
+import { RadioProps } from "./props";
+import styles from "./index.module.scss";
 
 const Radio = ({
   className,
@@ -15,15 +15,15 @@ const Radio = ({
 
   useEffect(() => {
     onChange(value);
-  }, [value]);
+  }, [value, onChange]);
 
   return (
     <div className={cn(styles.radio, className)}>
       <label>
         <input
           type="radio"
-          value={'val1'}
-          checked={value === 'val1'}
+          value={"val1"}
+          checked={value === "val1"}
           onChange={(e) => setValue(e.target.value)}
         />
         {val1}
@@ -32,8 +32,8 @@ const Radio = ({
       <label>
         <input
           type="radio"
-          value={'val2'}
-          checked={value === 'val2'}
+          value={"val2"}
+          checked={value === "val2"}
           onChange={(e) => setValue(e.target.value)}
         />
         {val2}

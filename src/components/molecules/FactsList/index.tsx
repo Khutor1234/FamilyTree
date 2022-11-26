@@ -1,20 +1,20 @@
-import cn from 'classnames';
-import { useState, useEffect } from 'react';
-import { BsPlusLg } from 'react-icons/bs';
-import { TiDelete } from 'react-icons/ti';
-import { format } from 'date-fns';
+import cn from "classnames";
+import { useState, useEffect } from "react";
+import { BsPlusLg } from "react-icons/bs";
+import { TiDelete } from "react-icons/ti";
+import { format } from "date-fns";
 
-import { IUserFact } from '../../interfaces';
-import { FactsListProps } from './props';
-import styles from './index.module.scss';
+import { IUserFact } from "../../interfaces";
+import { FactsListProps } from "./props";
+import styles from "./index.module.scss";
 
 const FactsList = ({
   addToList,
   defaultFacts,
   className,
 }: FactsListProps): JSX.Element => {
-  const [year, setYear] = useState('');
-  const [event, setEvent] = useState('');
+  const [year, setYear] = useState("");
+  const [event, setEvent] = useState("");
   const [facts, setFacts] = useState<IUserFact[]>(defaultFacts);
   const [warning, setWarning] = useState(false);
 
@@ -26,11 +26,11 @@ const FactsList = ({
         {
           year: year,
           text: event,
-          id: '' + new Date().getTime(),
+          id: "" + new Date().getTime(),
         },
       ]);
-      setEvent('');
-      setYear('');
+      setEvent("");
+      setYear("");
     } else {
       setWarning(true);
     }
@@ -39,7 +39,7 @@ const FactsList = ({
   useEffect(() => {
     addToList(facts);
     setWarning(false);
-  }, [facts]);
+  }, [facts, addToList]);
 
   useEffect(() => {
     setWarning(false);
@@ -51,7 +51,7 @@ const FactsList = ({
         <div className={styles.label}>Короткі факти:</div>
         {facts.map((el) => (
           <div key={el.id} className={styles.fact}>
-            {el.text}({format(new Date(el.year), 'yyyy')}р.)
+            {el.text}({format(new Date(el.year), "yyyy")}р.)
             <div
               className={styles.delete}
               onClick={() =>
