@@ -61,7 +61,7 @@ const Tree = memo<TreeProps>(function Tree({
     if (!!input && findUser) {
       setRootId(findUser.id);
     }
-  }, [input]);
+  }, [input, tree]);
 
   const onResetClick = useCallback(() => {
     setRootId(myId);
