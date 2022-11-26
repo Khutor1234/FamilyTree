@@ -1,20 +1,20 @@
-import { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
-import { AppProps } from './props';
-import { MainPage, LoginPage, ProfilePage } from '../../pages';
-import { TState, TDispatch } from '../interfaces';
-import { userSelector } from '../../store/selectors/user';
-import { getUser, logIn } from '../../store/actions/user';
+import { AppProps } from "./props";
+import { MainPage, LoginPage, ProfilePage } from "../../pages";
+import { TState, TDispatch } from "../interfaces";
+import { userSelector } from "../../store/selectors/user";
+import { getUser, logIn } from "../../store/actions/user";
 
 const App = ({ getUser, user, logIn }: AppProps) => {
   useEffect(() => {
     if (getUser) {
       getUser();
     }
-  });
+  }, []);
 
   const routes = !user ? (
     <Route path="/" element={<LoginPage logIn={logIn} />} />

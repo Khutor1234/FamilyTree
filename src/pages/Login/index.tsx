@@ -1,5 +1,5 @@
-import { LoginProps } from './props';
-import styles from './index.module.scss';
+import { LoginProps } from "./props";
+import styles from "./index.module.scss";
 
 const LoginPage = ({ logIn }: LoginProps): JSX.Element => {
   return (

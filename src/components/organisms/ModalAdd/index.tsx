@@ -1,33 +1,33 @@
-import { useState, useEffect } from 'react';
-import Modal from 'react-modal';
-import { CgProfile } from 'react-icons/cg';
-import cn from 'classnames';
-import { IoIosArrowRoundBack } from 'react-icons/io';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { useState, useEffect } from "react";
+import Modal from "react-modal";
+import { CgProfile } from "react-icons/cg";
+import cn from "classnames";
+import { IoIosArrowRoundBack } from "react-icons/io";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
-import { addRelativesMenu as menu } from '../../data';
-import { TState, TDispatch } from '../../interfaces';
-import { treeSelector } from '../../../store/selectors/tree';
-import { addUser } from '../../../store/actions/tree';
-import { IUserFact } from '../../interfaces';
-import { Button, Radio, FactsList, ModalCalendar } from '../../index';
-import { ModalProps } from './props';
-import styles from './index.module.scss';
+import { addRelativesMenu as menu } from "../../data";
+import { TState, TDispatch } from "../../interfaces";
+import { treeSelector } from "../../../store/selectors/tree";
+import { addUser } from "../../../store/actions/tree";
+import { IUserFact } from "../../interfaces";
+import { Button, Radio, FactsList, ModalCalendar } from "../../index";
+import { ModalProps } from "./props";
+import styles from "./index.module.scss";
 
 const customStyles = {
   overlay: {
-    backgroundColor: 'RGBA(0,0,0,.6)',
+    backgroundColor: "RGBA(0,0,0,.6)",
   },
   content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    backgroundColor: 'RGBA(0,0,0,0)',
-    border: 'none',
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "RGBA(0,0,0,0)",
+    border: "none",
     padding: 0,
   },
 };
@@ -51,34 +51,34 @@ const ModalAdd = ({
   addUser,
   user,
 }: ModalProps): JSX.Element => {
-  const [button, setButton] = useState('');
-  const [gender, setGender] = useState('female');
+  const [button, setButton] = useState("");
+  const [gender, setGender] = useState("female");
   const [live, setLive] = useState(true);
   const [warning, setWarning] = useState(false);
 
-  const [fatherName, setFatherName] = useState('');
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('ss');
+  const [fatherName, setFatherName] = useState("");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("ss");
   const [born, setBorn] = useState<IUserBorn>({
-    city: 's',
-    country: 'ssss',
+    city: "s",
+    country: "ssss",
     date: null,
   });
-  const [now, setNow] = useState({ city: '', country: '' });
+  const [now, setNow] = useState({ city: "", country: "" });
   const [died, setDied] = useState<IUserDied>({
-    city: '',
-    country: '',
+    city: "",
+    country: "",
     date: null,
-    reason: '',
-    place: '',
+    reason: "",
+    place: "",
   });
-  const [surname, setSurname] = useState('ssss');
-  const [maidenName, setMaidenName] = useState('');
+  const [surname, setSurname] = useState("ssss");
+  const [maidenName, setMaidenName] = useState("");
   const [facts, setFacts] = useState<IUserFact[]>([]);
   const [social, setSocial] = useState({
-    telegram: '',
-    instagram: '',
-    tel: '',
+    telegram: "",
+    instagram: "",
+    tel: "",
   });
 
   useEffect(() => {
@@ -127,7 +127,6 @@ const ModalAdd = ({
     }
   };
 
-  console.log(user, 'USER');
   return (
     <Modal
       style={customStyles}
@@ -135,7 +134,7 @@ const ModalAdd = ({
       isOpen={modal}
       onRequestClose={() => {
         close();
-        setButton('');
+        setButton("");
       }}
       contentLabel="Form"
     >
@@ -149,8 +148,8 @@ const ModalAdd = ({
           </div>
           {menu.map((el) => {
             if (
-              (el.value === 'parents' && node && node.parents.length > 1) ||
-              (el.value === 'spouses' && node && node.spouses.length > 0)
+              (el.value === "parents" && node && node.parents.length > 1) ||
+              (el.value === "spouses" && node && node.spouses.length > 0)
             ) {
               return (
                 <div
@@ -176,7 +175,7 @@ const ModalAdd = ({
       ) : (
         <div className={styles.mainModal}>
           {!user && (
-            <div className={styles.back} onClick={() => setButton('')}>
+            <div className={styles.back} onClick={() => setButton("")}>
               <IoIosArrowRoundBack size="20px" />
               {menu.find((el) => el.value === button)?.text}
             </div>
@@ -189,11 +188,11 @@ const ModalAdd = ({
 
             <div className={styles.info}>
               <Radio
-                defaultValue={gender === 'male' ? 'val2' : 'val1'}
+                defaultValue={gender === "male" ? "val2" : "val1"}
                 val1="Жінка"
                 val2="Чоловік"
                 onChange={(val) =>
-                  setGender(val === 'val1' ? 'female' : 'male')
+                  setGender(val === "val1" ? "female" : "male")
                 }
               />
 
@@ -222,7 +221,7 @@ const ModalAdd = ({
                 onChange={(e) => setFatherName(e.target.value)}
                 placeholder="По-батькові"
               />
-              {gender === 'female' && (
+              {gender === "female" && (
                 <input
                   className={cn(styles.input)}
                   value={maidenName}
@@ -261,10 +260,10 @@ const ModalAdd = ({
                 placeholder="Місто "
               />
               <Radio
-                defaultValue={live ? 'val1' : 'val2'}
-                val1={gender === 'male' ? 'Живий' : 'Жива'}
-                val2={gender === 'male' ? ' Мертвий' : ' Мертва'}
-                onChange={(val) => setLive(val === 'val1' ? true : false)}
+                defaultValue={live ? "val1" : "val2"}
+                val1={gender === "male" ? "Живий" : "Жива"}
+                val2={gender === "male" ? " Мертвий" : " Мертва"}
+                onChange={(val) => setLive(val === "val1" ? true : false)}
               />
 
               {live ? (
@@ -375,7 +374,7 @@ const ModalAdd = ({
                 onClick={() => {
                   addPerson();
                 }}
-                text={user ? 'Зберегти' : 'Додати'}
+                text={user ? "Зберегти" : "Додати"}
               />
             </div>
           </form>

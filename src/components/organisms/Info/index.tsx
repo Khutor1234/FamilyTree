@@ -1,22 +1,22 @@
-import cn from 'classnames';
-import { useState } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { IoIosArrowRoundBack } from 'react-icons/io';
-import { CgProfile } from 'react-icons/cg';
-import { format } from 'date-fns';
-import { Link } from 'react-router-dom';
-import { ModalAdd } from '../../index';
+import cn from "classnames";
+import { useState } from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { IoIosArrowRoundBack } from "react-icons/io";
+import { CgProfile } from "react-icons/cg";
+import { format } from "date-fns";
+import { Link } from "react-router-dom";
+import { ModalAdd } from "../../index";
 
-import { relativeItems } from '../../data';
-import { countYears } from '../../../utils';
-import { Button } from '../../index';
-import { TState, TDispatch, IUser } from '../../interfaces';
-import { treeSelector } from '../../../store/selectors/tree';
-import { logOut } from '../../../store/actions/user';
-import { getTree } from '../../../store/actions/tree';
-import { InfoProps } from './props';
-import styles from './index.module.scss';
+import { relativeItems } from "../../data";
+import { countYears } from "../../../utils";
+import { Button } from "../../index";
+import { TState, TDispatch, IUser } from "../../interfaces";
+import { treeSelector } from "../../../store/selectors/tree";
+import { logOut } from "../../../store/actions/user";
+import { getTree } from "../../../store/actions/tree";
+import { InfoProps } from "./props";
+import styles from "./index.module.scss";
 
 const Info = ({ id, tree, logOut }: InfoProps): JSX.Element => {
   const user = tree.find((el) => el.id === id);
@@ -32,13 +32,16 @@ const Info = ({ id, tree, logOut }: InfoProps): JSX.Element => {
             <span>Повернутися до дерева</span>
           </div>
         </Link>
+
         <div>
           <Button text="Редагувати" onClick={() => setModal(true)} />
-          <Button
-            className={styles.logout}
-            text="Вийти"
-            onClick={() => logOut()}
-          />
+          <Link to={`/`}>
+            <Button
+              className={styles.logout}
+              text="Вийти"
+              onClick={() => logOut()}
+            />
+          </Link>
         </div>
       </div>
       <div className={styles.main}>
@@ -48,7 +51,7 @@ const Info = ({ id, tree, logOut }: InfoProps): JSX.Element => {
           </div>
           <div className={styles.name}>
             {user?.name} {user?.surname}
-            {user?.maidenName && '(' + user?.maidenName + ')'}
+            {user?.maidenName && "(" + user?.maidenName + ")"}
           </div>
         </div>
         <div className={styles.info}>
@@ -72,7 +75,7 @@ const Info = ({ id, tree, logOut }: InfoProps): JSX.Element => {
 
           {user?.born.date ? (
             <div className={styles.text}>
-              {format(new Date(user?.born?.date), 'dd.MM.yyyy')}
+              {format(new Date(user?.born?.date), "dd.MM.yyyy")}
             </div>
           ) : (
             <div className={styles.unknown}>Невідомо</div>
@@ -102,7 +105,7 @@ const Info = ({ id, tree, logOut }: InfoProps): JSX.Element => {
 
               {user?.died?.date ? (
                 <div className={styles.text}>
-                  {format(new Date(user?.died?.date), 'dd.MM.yyyy')}
+                  {format(new Date(user?.died?.date), "dd.MM.yyyy")}
                 </div>
               ) : (
                 <div className={styles.unknown}>Невідомо</div>
@@ -172,7 +175,7 @@ const Info = ({ id, tree, logOut }: InfoProps): JSX.Element => {
                               <span>
                                 (
                                 {countYears(
-                                  format(new Date(thisUser?.born.date), 'yyyy')
+                                  format(new Date(thisUser?.born.date), "yyyy")
                                 )}
                                 р.)
                               </span>
@@ -205,7 +208,7 @@ const Info = ({ id, tree, logOut }: InfoProps): JSX.Element => {
                   (
                   {countYears(
                     el.year,
-                    format(new Date(user?.born?.date), 'yyyy')
+                    format(new Date(user?.born?.date), "yyyy")
                   )}
                   р.)
                 </div>
