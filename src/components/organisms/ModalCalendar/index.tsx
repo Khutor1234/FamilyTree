@@ -28,7 +28,7 @@ const ModalCalender = ({
       <DatePicker
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        defaultValue={new Date(2022, 8, 8)}
+        defaultValue={new Date(2022, 1, 1)}
         dayNames={["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"]}
         monthNames={[
           "Січень",

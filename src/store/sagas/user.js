@@ -1,11 +1,11 @@
-import { all, takeLatest, take, call, put } from 'redux-saga/effects';
+import { all, takeLatest, take, call, put } from "redux-saga/effects";
 
 import {
   authProvider as ap,
   reduxSagaFirebase as rsf,
   db,
-} from '../../utils/service';
-import { USER } from '../types';
+} from "../../utils/service";
+import { USER } from "../types";
 
 function* getUserSaga() {
   try {
@@ -14,17 +14,17 @@ function* getUserSaga() {
       if (time) {
         return new Date(time.seconds * 1000 + time.nanoseconds / 1000000);
       }
-      return '';
+      return "";
     };
 
     while (true) {
       const { user } = yield take(authChannel);
 
       if (user) {
-        let usersRef = db.collection('users');
+        let usersRef = db.collection("users");
 
         const snapshot = yield call([
-          usersRef.where('email', '==', user.email),
+          usersRef.where("email", "==", user.email),
           usersRef.get,
         ]);
 

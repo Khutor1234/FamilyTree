@@ -2,8 +2,9 @@ import { format } from 'date-fns';
 
 export const countYears = (
   date: number | string,
-  dateFrom?: number | string
+  dateFrom?: number | string,
 ): number => {
+  console.log(date,'date', dateFrom,'from')
   if (dateFrom) {
     return +date - +dateFrom;
   } else {

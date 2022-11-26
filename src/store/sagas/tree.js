@@ -1,17 +1,46 @@
 /* eslint-disable no-loop-func */
-import { all, takeLatest, call, put, select } from 'redux-saga/effects';
+import { all, takeLatest, call, put, select } from "redux-saga/effects";
 
-import { reduxSagaFirebase as rsf } from '../../utils/service';
-import { TREE } from '../types';
+import { reduxSagaFirebase as rsf } from "../../utils/service";
+import { TREE } from "../types";
+
+function* editUserSaga({ payload: { data, successCallback } }) {
+  try {
+    const {
+      treeReducer: { tree },
+    } = yield select();
+
+    const user = tree.find((el) => el.id === data?.id);
+    yield call(rsf.firestore.setDocument, `users/${data.id}`, {
+      ...user,
+      ...data,
+    });
+
+    yield put({
+      type: TREE.EDIT_USER_SUCCESS,
+    });
+    successCallback && successCallback();
+  } catch (err) {
+    yield put({
+      type: TREE.EDIT_USER_FAILURE,
+      payload: {
+        errors: {
+          status: err?.response?.status,
+          message: err?.response?.data?.message,
+        },
+      },
+    });
+  }
+}
 
 function* getTreeSaga() {
   try {
-    const snapshot = yield call(rsf.firestore.getCollection, 'users');
+    const snapshot = yield call(rsf.firestore.getCollection, "users");
     const getTime = (time) => {
       if (time) {
         return new Date(time.seconds * 1000 + time.nanoseconds / 1000000);
       }
-      return '';
+      return "";
     };
     let users = [];
     snapshot?.forEach((user) => {
@@ -51,7 +80,7 @@ function* getTreeSaga() {
   }
 }
 
-function* addUserSaga({ payload: { role, userId, user } }) {
+function* addUserSaga({ payload: { role, userId, user, successCallback } }) {
   try {
     const {
       treeReducer: { tree },
@@ -59,23 +88,23 @@ function* addUserSaga({ payload: { role, userId, user } }) {
     const prevUser = tree.find((el) => el.id === userId);
 
     let data = { spouses: [], siblings: [], parents: [], children: [] };
-    const { id } = yield call(rsf.firestore.addDocument, 'users', {
+    const { id } = yield call(rsf.firestore.addDocument, "users", {
       ...data,
       ...user,
     });
 
-    if (role === 'spouses') {
+    if (role === "spouses") {
       const children = [...prevUser.children];
       const spouses = [
         {
           id: userId,
-          type: 'married',
+          type: "married",
         },
       ];
 
       yield call(rsf.firestore.setDocument, `users/${userId}`, {
         ...prevUser,
-        spouses: [{ id, type: 'married' }],
+        spouses: [{ id, type: "married" }],
       });
 
       let n = 0;
@@ -86,7 +115,7 @@ function* addUserSaga({ payload: { role, userId, user } }) {
         );
         yield call(rsf.firestore.setDocument, `users/${child.id}`, {
           ...child,
-          parents: [...child.parents, { id, type: 'blood' }],
+          parents: [...child.parents, { id, type: "blood" }],
         });
         n++;
       }
@@ -96,15 +125,15 @@ function* addUserSaga({ payload: { role, userId, user } }) {
         children,
         spouses,
       };
-    } else if (role === 'parents') {
+    } else if (role === "parents") {
       let spouses = [];
       const children = [
         ...prevUser.siblings,
-        { id: prevUser.id, type: 'blood' },
+        { id: prevUser.id, type: "blood" },
       ];
 
       if (prevUser?.parents[0]?.id) {
-        spouses = [{ id: prevUser.parents[0].id, type: 'married' }];
+        spouses = [{ id: prevUser.parents[0].id, type: "married" }];
         const spouse = tree.find((el) => el.id === prevUser.parents[0].id);
         yield call(
           rsf.firestore.setDocument,
@@ -114,7 +143,7 @@ function* addUserSaga({ payload: { role, userId, user } }) {
             spouses: [
               {
                 id,
-                type: 'married',
+                type: "married",
               },
             ],
           }
@@ -127,7 +156,7 @@ function* addUserSaga({ payload: { role, userId, user } }) {
           ...prevUser.parents,
           {
             id,
-            type: 'blood',
+            type: "blood",
           },
         ],
       });
@@ -141,7 +170,7 @@ function* addUserSaga({ payload: { role, userId, user } }) {
 
         yield call(rsf.firestore.setDocument, `users/${sibling.id}`, {
           ...sibling,
-          parents: [...sibling.parents, { id, type: 'blood' }],
+          parents: [...sibling.parents, { id, type: "blood" }],
         });
         n++;
       }
@@ -151,12 +180,12 @@ function* addUserSaga({ payload: { role, userId, user } }) {
         children,
         spouses,
       };
-    } else if (role === 'children') {
+    } else if (role === "children") {
       let siblings = [...prevUser.children];
       let parents = [
         {
           id: userId,
-          type: 'blood',
+          type: "blood",
         },
       ];
 
@@ -166,7 +195,7 @@ function* addUserSaga({ payload: { role, userId, user } }) {
           ...parents,
           {
             id: spouse.id,
-            type: 'blood',
+            type: "blood",
           },
         ];
 
@@ -179,7 +208,7 @@ function* addUserSaga({ payload: { role, userId, user } }) {
               ...spouse.children,
               {
                 id,
-                type: 'blood',
+                type: "blood",
               },
             ],
           }
@@ -192,7 +221,7 @@ function* addUserSaga({ payload: { role, userId, user } }) {
           ...prevUser.children,
           {
             id,
-            type: 'blood',
+            type: "blood",
           },
         ],
       });
@@ -206,7 +235,7 @@ function* addUserSaga({ payload: { role, userId, user } }) {
 
         yield call(rsf.firestore.setDocument, `users/${child.id}`, {
           ...child,
-          siblings: [...child.siblings, { id, type: 'blood' }],
+          siblings: [...child.siblings, { id, type: "blood" }],
         });
         n++;
       }
@@ -229,6 +258,7 @@ function* addUserSaga({ payload: { role, userId, user } }) {
         response: null,
       },
     });
+    successCallback && successCallback();
   } catch (err) {
     yield put({
       type: TREE.ADD_USER_FAILURE,
@@ -243,6 +273,7 @@ function* addUserSaga({ payload: { role, userId, user } }) {
 }
 
 export default function* root() {
+  yield all([takeLatest(TREE.EDIT_USER, editUserSaga)]);
   yield all([takeLatest(TREE.GET_TREE, getTreeSaga)]);
   yield all([takeLatest(TREE.ADD_USER, addUserSaga)]);
 }

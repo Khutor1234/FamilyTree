@@ -4,4 +4,5 @@ export interface InfoProps {
   id: string | undefined;
   tree: IUser[];
   logOut: () => void;
+  isRequest: boolean
 }

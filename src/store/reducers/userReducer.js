@@ -1,7 +1,7 @@
-import initialState from '../initialStates';
-import injectReducer from '../injectReducer';
+import initialState from "../initialStates";
+import injectReducer from "../injectReducer";
 
-import { USER } from '../types';
+import { USER } from "../types";
 
 export default injectReducer(initialState.userReducer, {
   [USER.GET_USER]: (state) => {

@@ -1,9 +1,28 @@
-import initialState from '../initialStates';
-import injectReducer from '../injectReducer';
+import initialState from "../initialStates";
+import injectReducer from "../injectReducer";
 
-import { TREE } from '../types';
+import { TREE } from "../types";
 
 export default injectReducer(initialState.treeReducer, {
+  [TREE.EDIT_USER]: (state) => {
+    return {
+      ...state,
+      isRequest: true,
+      errors: null,
+    };
+  },
+  [TREE.EDIT_USER_SUCCESS]: (state) => ({
+    ...state,
+    isRequest: false,
+    errors: null,
+  }),
+  [TREE.EDIT_USER_FAILURE]: (state, { payload: { errors } }) => ({
+    ...state,
+    isRequest: false,
+    user: null,
+    errors: errors,
+  }),
+
   [TREE.GET_TREE]: (state) => ({
     ...state,
     isRequest: true,

@@ -1,8 +1,14 @@
-import { createActions } from 'redux-actions';
+import { createActions } from "redux-actions";
 
-import { TREE } from '../types';
+import { TREE } from "../types";
 
-export const { getTree, addUser } = createActions({
+export const { getTree, addUser, editUser } = createActions({
+  [TREE.EDIT_USER]: (data, successCallback) => ({ data, successCallback }),
   [TREE.GET_TREE]: () => ({}),
-  [TREE.ADD_USER]: (role, userId, user) => ({ role, userId, user }),
+  [TREE.ADD_USER]: (role, userId, user, successCallback) => ({
+    role,
+    userId,
+    user,
+    successCallback,
+  }),
 });

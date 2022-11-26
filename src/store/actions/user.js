@@ -1,6 +1,6 @@
-import { createActions } from 'redux-actions';
+import { createActions } from "redux-actions";
 
-import { USER } from '../types';
+import { USER } from "../types";
 
 export const { getUser, logIn, logOut } = createActions({
   [USER.GET_USER]: () => ({}),

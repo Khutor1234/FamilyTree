@@ -6,21 +6,29 @@ import { IoIosArrowRoundBack } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
-import { ModalAdd } from "../../index";
+import ReactLoading from "react-loading";
 
+import { ModalAdd } from "../../index";
 import { relativeItems } from "../../data";
 import { countYears } from "../../../utils";
 import { Button } from "../../index";
 import { TState, TDispatch, IUser } from "../../interfaces";
-import { treeSelector } from "../../../store/selectors/tree";
+import { treeSelector, isRequestSelector } from "../../../store/selectors/tree";
 import { logOut } from "../../../store/actions/user";
-import { getTree } from "../../../store/actions/tree";
 import { InfoProps } from "./props";
 import styles from "./index.module.scss";
 
-const Info = ({ id, tree, logOut }: InfoProps): JSX.Element => {
+const Info = ({ id, tree, logOut, isRequest }: InfoProps): JSX.Element => {
   const user = tree.find((el) => el.id === id);
   const [modal, setModal] = useState(false);
+
+  if (isRequest) {
+    return (
+      <div className={styles.spinner}>
+        <ReactLoading type="spin" color="#8DE4AF" />
+      </div>
+    );
+  }
 
   return (
     <div className={cn(styles.wrapper)}>
@@ -277,13 +285,13 @@ const Info = ({ id, tree, logOut }: InfoProps): JSX.Element => {
 
 const mapStateToProps = (state: TState) => ({
   tree: treeSelector(state),
+  isRequest: isRequestSelector(state),
 });
 
 const mapDispatchToProps = (dispatch: TDispatch) =>
   bindActionCreators(
     {
       logOut,
-      getTree,
     },
     dispatch
   );

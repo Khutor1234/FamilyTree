@@ -7,6 +7,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
 import { addRelativesMenu as menu } from "../../data";
+import { getTree, editUser } from "../../../store/actions/tree";
 import { TState, TDispatch } from "../../interfaces";
 import { treeSelector } from "../../../store/selectors/tree";
 import { addUser } from "../../../store/actions/tree";
@@ -50,6 +51,8 @@ const ModalAdd = ({
   node,
   addUser,
   user,
+  getTree,
+  editUser,
 }: ModalProps): JSX.Element => {
   const [button, setButton] = useState("");
   const [gender, setGender] = useState("female");
@@ -99,6 +102,32 @@ const ModalAdd = ({
   }, [user]);
 
   const addPerson = () => {
+    const data = {
+      name,
+      surname,
+      born,
+      died,
+      email,
+      facts,
+      gender,
+      maidenName,
+      now,
+      live,
+      social,
+      fatherName,
+    };
+
+    if (user) {
+      editUser(
+        {
+          ...data,
+          id: user.id,
+        },
+        getTree
+      );
+      close();
+    }
+
     if (
       button &&
       node &&
@@ -108,20 +137,7 @@ const ModalAdd = ({
       born.city &&
       born.country
     ) {
-      addUser(button, node.id, {
-        name,
-        surname,
-        born,
-        died,
-        email,
-        facts,
-        gender,
-        maidenName,
-        now,
-        live,
-        social,
-        fatherName,
-      });
+      addUser(button, node.id, data, getTree);
     } else {
       setWarning(true);
     }
@@ -392,6 +408,8 @@ const mapDispatchToProps = (dispatch: TDispatch) =>
   bindActionCreators(
     {
       addUser,
+      getTree,
+      editUser,
     },
     dispatch
   );
